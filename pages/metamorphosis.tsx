@@ -131,7 +131,10 @@ const Metamorphosis: NextPage = () => {
                   <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name, toggled: true })}>{name}</span>
                   <div>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
-                    <a className='zoom' target='_blank' rel='noreferrer' href={(m2 as any).image}><img height={150} src={(m2 as any).image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={(m2 as any).description} /></a>
+                    {m2.image
+                      ? <a className='zoom' target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m2.description} /></a>
+                      : <span style={{ display: 'inline-block', width: 150 }}> Not yet minted</span>
+                    }
                   </div>
                   <Bar
                     title={`Burned ${state.CREATOR_MAX_TOKENS - total} out of ${state.CREATOR_MAX_TOKENS} tokens.`}
