@@ -14,3 +14,62 @@ a {
 * {
   box-sizing: border-box;
 }
+
+html {
+  color-scheme: dark;
+}
+
+html, body, input, textarea, select, button {
+  border-color: rgb(110, 101, 88);
+  color: rgb(246, 229, 200);
+  background-color: rgb(22, 23, 22);
+}
+
+::-webkit-scrollbar {
+  background-color: rgb(28, 30, 30);
+  color: rgb(186, 176, 161);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: rgb(22, 23, 22);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(60, 63, 63);
+}
+
+::selection {
+  background-color: rgb(21, 63, 114) !important;
+  color: rgb(246, 229, 200) !important;
+}
+
+code {
+  background: #1d1e1e;
+  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid rgb(58, 60, 60);
+  justify-content: center;
+  align-items: center;
+}
+
+.footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.logo {
+  height: 1em;
+  margin-left: 0.5rem;
+  filter: invert(0.7) sepia(0.7);
+}
