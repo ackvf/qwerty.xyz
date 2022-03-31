@@ -16,32 +16,56 @@ const Metamorphosis: NextPage = () => {
   const { ref, visibleName, isComponentVisible, setIsComponentVisible } = useComponentToggle({ toggled: false })
 
   return (
-    <div className={styles.container}>
+    <div className='container'>
       <style jsx>{`
+        .container {
+
+        }
+
         .card {
           padding: 0.4rem;
           max-width: unset;
           text-align: center;
         }
 
+        .bigVideoWrap {
+          position: fixed;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          top: 0;
+          bottom: 0;
+        }
 
         .bigVideo {
-          position: fixed;
+          position: relative;
           padding: 20px;
-          box-sizing: content-box;
-          width: 90vh;
           background-color: rgb(22, 23, 22);
           max-width: unset;
+          width: 100%;
+
         }
 
         video {
           cursor: pointer;
+          position: relative;
+          z-index: 2;
         }
 
-        a {
+        .bigVideo :global(.Loading) {
+          z-index: 1;
+        }
+
+
+        .bigVideo a {
+          display: inline-block;
+          width: 50%;
+        }
+
+        .zoom {
           width: 50%;
           display: inline-block;
-          cursor: 'zoom-in';
+          cursor: zoom-in;
         }
 
         p {
@@ -49,6 +73,22 @@ const Metamorphosis: NextPage = () => {
           margin-bottom: 10px;
         }
       `}</style>
+
+      {isComponentVisible &&
+        <div className='bigVideoWrap'>
+          <div ref={ref} className='card bigVideo'>
+            <p className={styles.description}>
+              Click video to start playback.
+            </p>
+            <Loading />
+            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName as Names]?.[1].animation_url} />
+            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} />
+            <a className='blue' target='_blank' rel='noreferrer' href={state?.metadata[visibleName as Names]?.[1].animation_url} >{state?.metadata[visibleName as Names]?.[1].animation_url}</a>
+            <a className='blue' target='_blank' rel='noreferrer' href={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} >{(state?.metadata[visibleName as Names]?.[2] as any).animation_url}</a>
+          </div>
+        </div>
+      }
+
       <main className={styles.main}>
 
         <p className={styles.description}>
@@ -57,19 +97,6 @@ const Metamorphosis: NextPage = () => {
           <br />
           Click creator name to view animations, click image to enlarge it.
         </p>
-
-        {isComponentVisible &&
-          <div ref={ref} className='card bigVideo'>
-            <p className={styles.description}>
-              Click video to start playback.
-            </p>
-            <Loading />
-            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName as Names]?.[1].animation_url} />
-            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} />
-            <a className='blue' href={state?.metadata[visibleName as Names]?.[1].animation_url} >{state?.metadata[visibleName as Names]?.[1].animation_url}</a>
-            <a className='blue' href={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} >{(state?.metadata[visibleName as Names]?.[2] as any).animation_url}</a>
-          </div>
-        }
 
         <div className={styles.grid}>
 
@@ -84,8 +111,8 @@ const Metamorphosis: NextPage = () => {
                 <div key={name} className='card' style={{ width: '320px' }} >
                   <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name, toggled: true })}>{name}</span>
                   <div>
-                    <a target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
-                    <a target='_blank' rel='noreferrer' href={(m2 as any).image}><img height={150} src={(m2 as any).image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={(m2 as any).description} /></a>
+                    <a className='zoom' target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
+                    <a className='zoom' target='_blank' rel='noreferrer' href={(m2 as any).image}><img height={150} src={(m2 as any).image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={(m2 as any).description} /></a>
                   </div>
                   <Bar
                     title={`Burned ${state.CREATOR_MAX_TOKENS - total} out of ${state.CREATOR_MAX_TOKENS} tokens.`}
