@@ -15,6 +15,25 @@ const Metamorphosis: NextPage = () => {
 
   const { ref, visibleName, isComponentVisible, setIsComponentVisible } = useComponentToggle({ toggled: false })
 
+  if (state.creators === undefined) return (
+
+    <main className={styles.main}>
+
+      <p className={styles.description}>
+        <h2>CHAPTER TWO - METAMORPHOSIS</h2>
+        <a className='blue' href='https://burn.art/drops/metamorphosis'>https://burn.art/drops/metamorphosis</a>
+      </p>
+
+
+      <p className={styles.description}>
+        This app fetches contract data from the blockchain. You need to sign into Metamask.
+        <br />
+        <i>PS: It can be any wallet.</i>
+      </p>
+
+    </main>
+  )
+
   return (
     <div className='container'>
       <style jsx>{`
