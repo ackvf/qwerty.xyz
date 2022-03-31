@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import type { NextPage } from 'next'
 import useMetamorphosisContract from '../src/hooks/useMetamorphosisContract'
 import styles from '../styles/Home.module.css'
@@ -13,8 +14,6 @@ const Metamorphosis: NextPage = () => {
   type Names = keyof typeof state.metadata
 
   const { ref, visibleName, isComponentVisible, setIsComponentVisible } = useComponentToggle({ toggled: false })
-
-  console.debug('\n========== displayBig\n', visibleName, state?.metadata[visibleName as Names]?.[1].animation_url, state?.metadata[visibleName as Names]?.[2].animation_url)
 
   return (
     <div className={styles.container}>
@@ -66,9 +65,9 @@ const Metamorphosis: NextPage = () => {
             </p>
             <Loading />
             <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName as Names]?.[1].animation_url} />
-            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName as Names]?.[2].animation_url} />
+            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} />
             <a className='blue' href={state?.metadata[visibleName as Names]?.[1].animation_url} >{state?.metadata[visibleName as Names]?.[1].animation_url}</a>
-            <a className='blue' href={state?.metadata[visibleName as Names]?.[2].animation_url} >{state?.metadata[visibleName as Names]?.[2].animation_url}</a>
+            <a className='blue' href={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} >{(state?.metadata[visibleName as Names]?.[2] as any).animation_url}</a>
           </div>
         }
 
@@ -76,7 +75,7 @@ const Metamorphosis: NextPage = () => {
 
           {
 
-            state?.creators.map(([address, , , total, name], index) => {
+            state?.creators?.map(([address, , , total, name], index) => {
 
 
               const { 1: m1, 2: m2 } = state.metadata[name as Names]
@@ -86,7 +85,7 @@ const Metamorphosis: NextPage = () => {
                   <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name, toggled: true })}>{name}</span>
                   <div>
                     <a target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
-                    <a target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2?.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={(m2 as any).description} /></a>
+                    <a target='_blank' rel='noreferrer' href={(m2 as any).image}><img height={150} src={(m2 as any).image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={(m2 as any).description} /></a>
                   </div>
                   <Bar
                     title={`Burned ${state.CREATOR_MAX_TOKENS - total} out of ${state.CREATOR_MAX_TOKENS} tokens.`}
@@ -105,10 +104,11 @@ const Metamorphosis: NextPage = () => {
   )
 }
 
-export default Metamorphosis
+export default dynamic(async () => await Metamorphosis, {
+  ssr: false,
+})
 
-
-function toggleVideo({ currentTarget: e }) {
+function toggleVideo({ currentTarget: e }: any) {
   if (e.paused) e.play()
   else { e.pause() }
 }

@@ -61,7 +61,7 @@ async function collectMetadata(contract: Contract, setState: any) {
 
 export default function useMetamorphosisContract() {
   const contract = useRef<Contract>()
-  const [state, setState] = useState<ContractState>()
+  const [state, setState] = useState<ContractState>({} as ContractState)
 
   // function to get current count and update UI
   const loadValuesFromContract = async () => {
@@ -82,7 +82,9 @@ export default function useMetamorphosisContract() {
   useEffect(() => {
     // this is only run once on component mounting
     const setup = async () => {
-      const provider = new ethers.providers.Web3Provider((global as any).web3.currentProvider)
+      await (window as any).ethereum.enable()
+
+      const provider = new ethers.providers.Web3Provider((window as any).ethereum)
       const network = await provider.getNetwork()
       const contractAddress = '0x4D232CD85294Acd53Ec03F4A57F57888c9Ea1946'
 
@@ -91,8 +93,6 @@ export default function useMetamorphosisContract() {
         abi,
         provider.getSigner(),
       )
-
-        ; (global as any).c = contract.current
 
       loadValuesFromContract()
       // collectMetadata(contract.current, setState)

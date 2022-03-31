@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export default function useComponentToggle({ visibleName = '', toggled = false }: { visibleName?: string, toggled?: boolean }) {
   const [state, setIsComponentVisible] = useState<{ visibleName?: string, toggled?: boolean }>({ visibleName, toggled })
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   const handleClickOutside = (event: any) => {
     if (ref.current && !ref.current.contains(event.target)) {

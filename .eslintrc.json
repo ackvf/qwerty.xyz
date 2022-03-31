@@ -3,6 +3,7 @@
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "quotes": ["error", "single"],
-    "no-shadow":"warn"
+    "no-shadow": "warn",
+    "react/no-unescaped-entities": "warn"
   }
 }

@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   let writeOrErase = true
   let i = 0
 
-  function typeWriter(ref) {
+  function typeWriter(ref: HTMLElement) {
     if (!ref) return
 
     let txt = txts[txtix]
