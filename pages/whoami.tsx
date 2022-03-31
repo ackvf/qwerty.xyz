@@ -61,7 +61,7 @@ const WhoAmI: NextPage = () => {
   function swapper(ref: HTMLElement) {
     if (!ref) return
     const [a, b] = ref.children
-    console.debug('\n========== ref\n', ref)
+
     a.classList.toggle('hidden')
     b.classList.toggle('hidden')
 
@@ -119,36 +119,36 @@ const WhoAmI: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card}>
+          <a className='card'>
             <h2>Node.js ⤵</h2>
             <p>Google Firebase Cloud<br />NestJS</p>
           </a>
 
-          <a className={styles.card}>
+          <a className='card'>
             <h2>Web ⤵</h2>
             <p>Next.js, React.js, Svelte<br />web3.js, ethers.js</p>
           </a>
 
-          <a className={styles.card}>
+          <a className='card'>
             <h2>Solidity ⤵</h2>
             <p>ERC721, ERC1155<br />custom contracts</p>
           </a>
         </div>
 
         <div className={styles.grid}>
-          <a className={styles.card}>
+          <a className='card'>
             <h2>JavaScript ⤵</h2>
             <p>Since 2005</p>
             <p>({year - 2005} years)</p>
           </a>
 
-          <a className={styles.card}>
+          <a className='card'>
             <h2>TypeScript ⤵</h2>
             <p>Since 2018</p>
             <p>({year - 2018} years)</p>
           </a>
 
-          <a className={styles.card}>
+          <a className='card'>
             <h2>React.js ⤵</h2>
             <p>Since 2015</p>
             <p>({year - 2015} years)</p>

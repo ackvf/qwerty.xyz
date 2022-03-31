@@ -11,6 +11,10 @@ export default function HomeLink() {
           position: fixed;
           top: 0;
         }
+
+        .HomeLink :global(a) {
+          color: rgb(246, 229, 200);
+        }
       `}</style>
       <Link href='/'>↩</Link>
     </div>

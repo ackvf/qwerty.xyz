@@ -58,14 +58,14 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a href="whoami" className={styles.card}>
+          <a href="whoami" className='card'>
             <h2>whoami &rarr;</h2>
             <p>Find in-depth information about me.</p>
           </a>
 
           <a
-            href="ashdrop2"
-            className={styles.card}
+            href="metamorphosis"
+            className='card'
           >
             <h2>Ash drop II &rarr;</h2>
             <p>Blockchain infographics about Ash Chapter Two</p>
