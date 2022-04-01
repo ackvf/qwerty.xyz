@@ -5,9 +5,18 @@ import styles from '../styles/Home.module.css'
 import Loading from '../src/components/Loading'
 import useComponentToggle from '../src/hooks/useComponentToggle'
 import Bar from '../src/components/Bar'
+import { useEffect } from 'react'
+
 
 
 const Metamorphosis: NextPage = () => {
+
+  useEffect(() => {
+    console.debug('mount')
+    return () => {
+      console.debug('unmount')
+    }
+  })
 
   const { state } = useMetamorphosisContract()
 
@@ -123,7 +132,6 @@ const Metamorphosis: NextPage = () => {
 
             state?.creators?.map(([address, , , total, name], index) => {
 
-
               const { 1: m1, 2: m2 } = state.metadata[name as Names]
 
               return (
@@ -131,10 +139,7 @@ const Metamorphosis: NextPage = () => {
                   <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name, toggled: true })}>{name}</span>
                   <div>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
-                    {m2.image
-                      ? <a className='zoom' target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m2.description} /></a>
-                      : <span style={{ display: 'inline-block', width: 150 }}> Not yet minted</span>
-                    }
+                    <a className='zoom' target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m2.description} /></a>
                   </div>
                   <Bar
                     title={`Burned ${state.CREATOR_MAX_TOKENS - total} out of ${state.CREATOR_MAX_TOKENS} tokens.`}
@@ -143,6 +148,7 @@ const Metamorphosis: NextPage = () => {
                   />
                 </div>
               )
+
             })
 
           }
@@ -153,7 +159,7 @@ const Metamorphosis: NextPage = () => {
   )
 }
 
-export default dynamic(async () => await Metamorphosis, {
+export default dynamic(async () => Metamorphosis, {
   ssr: false,
 })
 

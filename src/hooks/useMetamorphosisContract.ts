@@ -47,34 +47,44 @@ type AllMetadata = {
 
 async function collectMetadata(contract: Contract, setState: any) {
   const creatorMax = 250
-  const allMetadata: AllMetadata = {} as AllMetadata
+  const allMetadata: AllMetadata = metadataJson as AllMetadata
+  const creators: Names = Object.keys(allMetadata) as unknown as Names
 
   let offset = 0
-  let ix = 1
+  let index = 1
 
-  while ((offset + ix) <= 7500) {
-    console.debug('ask', offset + ix)
-    const response = await contract.tokenURI(offset + ix).catch(() => '')
+  let currentCreatorByIndex: Names
+  let currentMetadataByCreator: FormsMetadata
+
+  (window as any).m = allMetadata
+
+  let ix: number
+  while ((ix = offset + index) <= 7500) {
+    currentCreatorByIndex = creators[(ix - 1) / creatorMax | 0] as Names
+    currentMetadataByCreator = allMetadata[currentCreatorByIndex] || {}
+
+    console.debug('CHECK', { ix, offset, index }, currentCreatorByIndex, { keys: Object.keys(currentMetadataByCreator).length })
+
+    if (index > creatorMax || Object.keys(currentMetadataByCreator).length === 2) {
+      index = 1
+      offset += creatorMax
+      continue
+    }
+
+    console.debug('ASK', ix)
+    const response = await contract.tokenURI(ix).catch(() => '')
 
     if (response === '') {
-      ix++
+      index++
       continue
     }
 
     let metadata: Metadata = JSON.parse(response.substring(27))
+    console.debug('__response:', ix, metadata.created_by, metadata.attributes[1])
 
-    console.debug('\n========== response', offset + ix, metadata.created_by, metadata.attributes[1], '\n')
+    currentMetadataByCreator[metadata.attributes[1].value] = metadata
 
-    allMetadata[metadata.created_by] ??= {} as FormsMetadata
-    const byCreator = allMetadata[metadata.created_by]
-    byCreator[metadata.attributes[1].value] = metadata
-
-    if (!byCreator[1] || !byCreator[2]) {
-      ix++
-    } else {
-      ix = 1
-      offset += creatorMax
-    }
+    index++
   }
 
 }
@@ -129,8 +139,9 @@ export default function useMetamorphosisContract() {
         provider.getSigner(),
       )
 
+      console.debug('called')
       loadValuesFromContract()
-      // collectMetadata(contract.current, setState)
+      collectMetadata(contract.current, setState)
     }
 
     setup()
@@ -139,7 +150,7 @@ export default function useMetamorphosisContract() {
       provider?.removeAllListeners()
       window.ethereum.removeAllListeners()
     }
-  })
+  }, [])
 
   return { state }
 }

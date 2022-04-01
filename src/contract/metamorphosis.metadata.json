@@ -361,7 +361,7 @@
   },
   "Filip Hodas": {
     "1": {
-      "name": "Ice #249",
+      "name": "Ice #21",
       "description": "Visual allegory depicting the contradictory coexistence between humanity and nature.",
       "created_by": "Filip Hodas",
       "image": "https://arweave.net/2n0zCLik1gclkARv6Fvpqwqko7Zlt6nUpEt46x0NJPw",
@@ -377,7 +377,23 @@
         }
       ]
     },
-    "2": {}
+    "2": {
+      "name": "Ash #22",
+      "description": "Visual allegory depicting the contradictory coexistence between humanity and nature.",
+      "created_by": "Filip Hodas",
+      "image": "https://arweave.net/HpxowknnYCVCve5ISsd-WC3iFZcGpi6cYuNjBhi1Stw",
+      "animation_url": "https://arweave.net/qdN5f1HcafJ3qsyx_YF_VJpyqb_xU2s6nQJbJ2U2KZw",
+      "attributes": [
+        {
+          "trait_type": "Creator",
+          "value": "Filip Hodas"
+        },
+        {
+          "trait_type": "Form",
+          "value": "2"
+        }
+      ]
+    }
   },
   "Fvckrender": {
     "1": {
