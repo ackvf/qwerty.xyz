@@ -1,8 +1,11 @@
 {
-  "name": "qwerty.art",
-  "version": "0.1.0",
+  "name": "www-qwerty",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
+    "deploy:xyz": "git push origin HEAD:qwerty.xyz",
+    "deploy:art": "git push origin HEAD:qwerty.art",
+    "deploy": "vercel",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

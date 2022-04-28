@@ -106,7 +106,7 @@ const WhoAmI: NextPage = () => {
         <p className={styles.description}>
           I am a FullStack web/blockchain <span className='swapper' ref={swapper}><span className='hidden'><code>developer</code>.</span><span><code>developer</code>.</span></span>
           <br />
-          Btw, the name's <i>Qwerty</i>.
+          Btw, you can call me <i>Qwerty</i>.
           <br />
           <br />
           <span ref={cool} />
@@ -121,7 +121,7 @@ const WhoAmI: NextPage = () => {
         <div className={styles.grid}>
           <a className='card'>
             <h2>Node.js ⤵</h2>
-            <p>Google Firebase Cloud<br />NestJS</p>
+            <p>Google Firebase Cloud<br />NestJS, express.js, GraphQL</p>
           </a>
 
           <a className='card'>

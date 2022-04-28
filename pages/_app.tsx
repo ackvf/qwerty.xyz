@@ -11,11 +11,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Qwerty.art</title>
+        <title>Qwerty Xyz</title>
         <meta name="description" content="Qwerty's craft page." />
         <link rel="icon" href="/favicon.png" />
       </Head>
       {(router.pathname !== '/') && <HomeLink />}
+      <div className='background' />
+
       <Component {...pageProps} />
 
       <footer className='footer'>
