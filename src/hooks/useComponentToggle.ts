@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 
-export default function useComponentToggle({ visibleName = '', toggled = false }: { visibleName?: string, toggled?: boolean }) {
-  const [state, setIsComponentVisible] = useState<{ visibleName?: string, toggled?: boolean }>({ visibleName, toggled })
-  const ref = useRef<HTMLDivElement>(null)
+type On<T> = { visibleName: T, toggled: true }
+type Off<T> = { visibleName?: T, toggled?: false }
+type Toggle<T> = On<T> | Off<T>
+
+export default function useComponentToggle<T>({ visibleName, toggled = false }: Toggle<T> = {}) {
+  const [state, setIsComponentVisible] = useState<Toggle<T>>({ visibleName, toggled } as Toggle<T>)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleClickOutside = (event: any) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsComponentVisible({ toggled: false })
+    if (containerRef.current && !containerRef.current.contains(event.target)) {
+      setIsComponentVisible({ toggled: false } as Off<T>)
     }
   }
 
@@ -17,5 +21,5 @@ export default function useComponentToggle({ visibleName = '', toggled = false }
     }
   }, [])
 
-  return { ref, visibleName: state.visibleName, isComponentVisible: state.toggled, setIsComponentVisible }
+  return { containerRef, visibleName: state.visibleName as T, isComponentVisible: state.toggled, setIsComponentVisible }
 }

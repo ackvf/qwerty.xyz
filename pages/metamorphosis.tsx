@@ -5,43 +5,14 @@ import styles from '../styles/Home.module.css'
 import Loading from '../src/components/Loading'
 import useComponentToggle from '../src/hooks/useComponentToggle'
 import Bar from '../src/components/Bar'
-import { useEffect } from 'react'
-
 
 
 const Metamorphosis: NextPage = () => {
-
-  useEffect(() => {
-    console.debug('mount')
-    return () => {
-      console.debug('unmount')
-    }
-  })
-
   const { state } = useMetamorphosisContract()
 
   type Names = keyof typeof state.metadata
 
-  const { ref, visibleName, isComponentVisible, setIsComponentVisible } = useComponentToggle({ toggled: false })
-
-  if (state.creators === undefined) return (
-
-    <main className={styles.main}>
-
-      <p className={styles.description}>
-        <h2>CHAPTER TWO - METAMORPHOSIS</h2>
-        <a className='blue' href='https://burn.art/drops/metamorphosis'>https://burn.art/drops/metamorphosis</a>
-      </p>
-
-
-      <p className={styles.description}>
-        This app fetches contract data from the blockchain. You need to sign into Metamask.
-        <br />
-        <i>PS: It can be any wallet.</i>
-      </p>
-
-    </main>
-  )
+  const { containerRef, visibleName, isComponentVisible, setIsComponentVisible } = useComponentToggle<Names>()
 
   return (
     <div className='container'>
@@ -104,15 +75,15 @@ const Metamorphosis: NextPage = () => {
 
       {isComponentVisible &&
         <div className='bigVideoWrap'>
-          <div ref={ref} className='card bigVideo'>
+          <div ref={containerRef} className='card bigVideo'>
             <p className={styles.description}>
               Click video to start playback.
             </p>
             <Loading />
-            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName as Names]?.[1].animation_url} />
-            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} />
-            <a className='blue' target='_blank' rel='noreferrer' href={state?.metadata[visibleName as Names]?.[1].animation_url} >{state?.metadata[visibleName as Names]?.[1].animation_url}</a>
-            <a className='blue' target='_blank' rel='noreferrer' href={(state?.metadata[visibleName as Names]?.[2] as any).animation_url} >{(state?.metadata[visibleName as Names]?.[2] as any).animation_url}</a>
+            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName]?.[1].animation_url} />
+            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[visibleName]?.[2] as any).animation_url} />
+            <a className='blue' target='_blank' rel='noreferrer' href={state?.metadata[visibleName]?.[1].animation_url} >{state?.metadata[visibleName]?.[1].animation_url}</a>
+            <a className='blue' target='_blank' rel='noreferrer' href={(state?.metadata[visibleName]?.[2] as any).animation_url} >{(state?.metadata[visibleName]?.[2] as any).animation_url}</a>
           </div>
         </div>
       }
@@ -129,20 +100,20 @@ const Metamorphosis: NextPage = () => {
         <div className={styles.grid}>
 
           {
-
             state?.creators?.map(([address, , , total, name], index) => {
 
+              const offlineTitle = state.offline ? ' You need to sign in to Metamask to fetch data from the blockchain. Scroll down for more info.' : ''
               const { 1: m1, 2: m2 } = state.metadata[name as Names]
 
               return (
                 <div key={name} className='card' style={{ width: '320px' }} >
-                  <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name, toggled: true })}>{name}</span>
+                  <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name as Names, toggled: true })}>{name}</span>
                   <div>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m2.description} /></a>
                   </div>
                   <Bar
-                    title={`Burned ${state.CREATOR_MAX_TOKENS - total} out of ${state.CREATOR_MAX_TOKENS} tokens.`}
+                    title={`Burned ${state.CREATOR_MAX_TOKENS - total} out of ${state.CREATOR_MAX_TOKENS} tokens.${offlineTitle}`}
                     value={(total / state.CREATOR_MAX_TOKENS)}
                     label={total}
                   />
@@ -150,10 +121,24 @@ const Metamorphosis: NextPage = () => {
               )
 
             })
-
           }
 
         </div>
+
+        {state.offline && (
+          <p className={styles.description} style={{ marginTop: 40 }}>
+            This app fetches current <i>burn</i> stats from the blockchain which normally requires a paid API service. Instead, it uses a free provider from your browser: Metamask. However, Metamask will not work unless you sign in.
+            <br />
+            <br />
+            <b>You can still enjoy the gallery without signing.</b>
+            <br />
+            <br />
+            <i>No transaction is ever made. You don't need to approve anything anyway.</i>
+            <br />
+            <i>PS: It can be any wallet.</i>
+          </p>
+        )}
+
       </main>
     </div>
   )

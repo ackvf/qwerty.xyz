@@ -3,6 +3,7 @@ import { Contract, ethers } from 'ethers'
 
 import abi from '../contract/metamorphosis.abi.json'
 import metadataJson from '../contract/metamorphosis.metadata.json'
+import creatorsJson from '../contract/metamorphosis.creators.json'
 import { useShallowState } from './useShallowState'
 
 import type { Web3Provider } from '@ethersproject/providers'
@@ -11,6 +12,7 @@ const toString = (x: any) => x.toString()
 const hex = (chainId: number) => `0x${chainId.toString(16)}`
 
 const contractAddress = '0x4D232CD85294Acd53Ec03F4A57F57888c9Ea1946'
+const CREATOR_MAX_TOKENS = 250
 
 declare global {
   interface Window {
@@ -19,8 +21,9 @@ declare global {
 }
 
 interface ContractState {
+  offline?: boolean, // set to true if not signed into Metamask to fetch data from blockchain
   CREATOR_MAX_TOKENS: number,
-  creators: [/* address */string, /* signed */boolean, /* editions */number, /* total */number, /* name */string][]
+  creators: [address: string, signed: boolean, editions: number, total: number, name: string][]
   metadata: AllMetadata
   errors?: string[]
 }
@@ -46,7 +49,7 @@ type AllMetadata = {
 }
 
 async function collectMetadata(contract: Contract, setState: any) {
-  const creatorMax = 250
+  const creatorMax = CREATOR_MAX_TOKENS
   const allMetadata: AllMetadata = metadataJson as AllMetadata
   const creators: Names = Object.keys(allMetadata) as unknown as Names
 
@@ -86,7 +89,6 @@ async function collectMetadata(contract: Contract, setState: any) {
 
     index++
   }
-
 }
 
 function promptNetworkChange() {
@@ -98,18 +100,24 @@ function promptNetworkChange() {
 
 export default function useMetamorphosisContract() {
   const contract = useRef<Contract>()
-  const [state, setState] = useShallowState<ContractState>({})
+  const [state, setState] = useShallowState<ContractState>({
+    offline: true,
+    CREATOR_MAX_TOKENS: CREATOR_MAX_TOKENS,
+    creators: creatorsJson as ContractState['creators'],
+    metadata: metadataJson as AllMetadata,
+  })
 
   // function to get current contract data and update UI
   const loadValuesFromContract = async () => {
     const [
-      CREATOR_MAX_TOKENS,
+      // CREATOR_MAX_TOKENS,
       creators,
     ] = await Promise.all([
-      contract.current?.CREATOR_MAX_TOKENS().then(toString),
+      // contract.current?.CREATOR_MAX_TOKENS().then(toString),
       contract.current?.creators(),
     ])
     setState({
+      offline: false,
       CREATOR_MAX_TOKENS,
       creators,
       metadata: metadataJson as AllMetadata,
@@ -118,9 +126,12 @@ export default function useMetamorphosisContract() {
   }
 
   useEffect(() => {
+    if (!window.ethereum) return
+
     let provider: Web3Provider
 
     const setup = async () => {
+      // window.ethereum.on('connect', setState()); // Sometimes when I log in, it won't refresh. Need to figure that out later I guess as I can't reproduce it now.
       await window.ethereum.enable()
 
       provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -139,16 +150,15 @@ export default function useMetamorphosisContract() {
         provider.getSigner(),
       )
 
-      console.debug('called')
       loadValuesFromContract()
-      collectMetadata(contract.current, setState)
+      // collectMetadata(contract.current, setState)
     }
 
     setup()
 
     return function cleanup() {
       provider?.removeAllListeners()
-      window.ethereum.removeAllListeners()
+      window?.ethereum.removeAllListeners()
     }
   }, [])
 
