@@ -48,7 +48,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to my <a href="https://qwerty.art">craft!</a>
+          Welcome to my <a href="https://qwerty.xyz">craft!</a>
         </h1>
 
         <p className={styles.description}>

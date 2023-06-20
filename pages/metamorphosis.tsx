@@ -1,10 +1,10 @@
-import dynamic from 'next/dynamic'
 import type { NextPage } from 'next'
-import useMetamorphosisContract from '../src/hooks/useMetamorphosisContract'
-import styles from '../styles/Home.module.css'
+import dynamic from 'next/dynamic'
+import Bar from '../src/components/Bar'
 import Loading from '../src/components/Loading'
 import useComponentToggle from '../src/hooks/useComponentToggle'
-import Bar from '../src/components/Bar'
+import useMetamorphosisContract from '../src/hooks/useMetamorphosisContract'
+import styles from '../styles/Home.module.css'
 
 
 const Metamorphosis: NextPage = () => {
@@ -22,9 +22,17 @@ const Metamorphosis: NextPage = () => {
         }
 
         .card {
+          width: 320px;
           padding: 0.4rem;
           max-width: unset;
           text-align: center;
+        }
+
+        .cardTitle {
+          font-size: 1.5rem;
+          cursor: pointer;
+          display: inline-block;
+          width: 100%;
         }
 
         .bigVideoWrap {
@@ -106,8 +114,8 @@ const Metamorphosis: NextPage = () => {
               const { 1: m1, 2: m2 } = state.metadata[name as Names]
 
               return (
-                <div key={name} className='card' style={{ width: '320px' }} >
-                  <span style={{ fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setIsComponentVisible({ visibleName: name as Names, toggled: true })}>{name}</span>
+                <div key={name} className='card'>
+                  <span className='cardTitle' onClick={() => setIsComponentVisible({ visibleName: name as Names, toggled: true })}>{name}</span>
                   <div>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m2.description} /></a>
