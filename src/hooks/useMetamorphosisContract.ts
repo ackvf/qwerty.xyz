@@ -1,9 +1,9 @@
-import { useRef, useEffect } from 'react'
 import { Contract, ethers } from 'ethers'
+import { useCallback, useEffect, useRef } from 'react'
 
 import abi from '../contract/metamorphosis.abi.json'
-import metadataJson from '../contract/metamorphosis.metadata.json'
 import creatorsJson from '../contract/metamorphosis.creators.json'
+import metadataJson from '../contract/metamorphosis.metadata.json'
 import { useShallowState } from './useShallowState'
 
 import type { Web3Provider } from '@ethersproject/providers'
@@ -108,7 +108,7 @@ export default function useMetamorphosisContract() {
   })
 
   // function to get current contract data and update UI
-  const loadValuesFromContract = async () => {
+  const loadValuesFromContract = useCallback(async () => {
     const [
       // CREATOR_MAX_TOKENS,
       creators,
@@ -123,44 +123,46 @@ export default function useMetamorphosisContract() {
       metadata: metadataJson as AllMetadata,
       errors: [],
     })
-  }
-
-  useEffect(() => {
-    if (!window.ethereum) return
-
-    let provider: Web3Provider
-
-    const setup = async () => {
-      // window.ethereum.on('connect', setState()); // Sometimes when I log in, it won't refresh. Need to figure that out later I guess as I can't reproduce it now.
-      await window.ethereum.enable()
-
-      provider = new ethers.providers.Web3Provider(window.ethereum)
-
-      window.ethereum.on('chainChanged', (newChain: string) => {
-        location.reload()
-      })
-
-      await provider.getNetwork().then(chain => {
-        if (chain.chainId !== 1) promptNetworkChange()
-      })
-
-      contract.current = new ethers.Contract(
-        contractAddress,
-        abi,
-        provider.getSigner(),
-      )
-
-      loadValuesFromContract()
-      // collectMetadata(contract.current, setState)
-    }
-
-    setup()
-
-    return function cleanup() {
-      provider?.removeAllListeners()
-      window?.ethereum.removeAllListeners()
-    }
   }, [])
 
-  return { state }
+  const providerRef = useRef<Web3Provider>()
+
+  function cleanup() {
+    providerRef.current?.removeAllListeners()
+    window?.ethereum.removeAllListeners()
+  }
+
+  /** @returns `cleanup()` function for use in `useEffect(connect, [])`. */
+  const setup = useCallback(async () => {
+    if (!window.ethereum) return
+
+    // window.ethereum.on('connect', setState); // Sometimes when I log in, it won't refresh. Need to figure that out later I guess as I can't reproduce it now.
+    await window.ethereum.enable()
+
+    let provider = providerRef.current = new ethers.providers.Web3Provider(window.ethereum)
+
+    window.ethereum.on('chainChanged', (newChain: string) => {
+      location.reload()
+    })
+
+    await provider.getNetwork().then(chain => {
+      if (chain.chainId !== 1) promptNetworkChange()
+    })
+
+    contract.current = new ethers.Contract(
+      contractAddress,
+      abi,
+      provider.getSigner(),
+    )
+
+    loadValuesFromContract()
+    // collectMetadata(contract.current, setState)
+
+    return cleanup
+  }, [])
+
+  /* Cleanup on unmount. */
+  useEffect(() => cleanup, [])
+
+  return { state, setup, cleanup }
 }

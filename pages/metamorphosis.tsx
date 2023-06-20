@@ -8,7 +8,7 @@ import styles from '../styles/Home.module.css'
 
 
 const Metamorphosis: NextPage = () => {
-  const { state } = useMetamorphosisContract()
+  const { state, setup } = useMetamorphosisContract()
 
   type Names = keyof typeof state.metadata
 
@@ -16,9 +16,14 @@ const Metamorphosis: NextPage = () => {
 
   return (
     <div className='container'>
+      <span className={`card connect ${state.offline || 'hidden'}`} onClick={setup}>connect</span>
       <style jsx>{`
         .container {
 
+        }
+
+        .hidden {
+          display: none;
         }
 
         .card {
@@ -33,6 +38,15 @@ const Metamorphosis: NextPage = () => {
           cursor: pointer;
           display: inline-block;
           width: 100%;
+        }
+
+        .card.connect {
+          width: unset;
+          margin: 0;
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          cursor: pointer;
         }
 
         .bigVideoWrap {
@@ -135,10 +149,10 @@ const Metamorphosis: NextPage = () => {
 
         {state.offline && (
           <p className={styles.description} style={{ marginTop: 40 }}>
-            This app fetches current <i>burn</i> stats from the blockchain which normally requires a paid API service. Instead, it uses a free provider from your browser: Metamask. However, Metamask will not work unless you sign in.
+            This app fetches current <i>burn</i> stats from the blockchain which normally requires a paid API service. Instead, it uses a free provider from your browser: Metamask. However, Metamask will not work unless you connect some wallet.
             <br />
             <br />
-            <b>You can still enjoy the gallery without signing.</b>
+            <b>You can still enjoy the gallery without connecting.</b>
             <br />
             <br />
             <i>No transaction is ever made. You don't need to approve anything anyway.</i>
