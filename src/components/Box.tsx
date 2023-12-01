@@ -65,9 +65,11 @@ export default function Box() {
       // onMouseMove={handleMouseMove}
       style={
         {
-          '--background-color': '4 11 15',
-          '--padding-color': '255 255 255',
-          '--border-color': '255 255 255',
+          '--light-color': 'rgba(255, 255, 205, 0.15)', // circle gradient
+          '--background-color': '22 23 22', // flat color
+          '--padding-color': '255 255 235', // circle gradient
+          '--border-color': '235 255 235',  // linear gradient
+          '--shadow-color': '255 255 235',  // circle shadow
 
           '--bg-content': 'linear-gradient(rgb(var(--background-color)), rgb(var(--background-color)))',
           '--bg-padding': useMotionTemplate`linear-gradient(${angle}deg,
@@ -78,24 +80,24 @@ export default function Box() {
             )
           `,
           '--bg-border': useMotionTemplate`radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
+              70vw circle at ${mouseX}px ${mouseY}px,
               rgb(var(--border-color) / 1),
               transparent 50%
             )
           `,
-          'box-shadow': useMotionTemplate`${shadowX}px ${shadowY}px 8px -3px rgb(255 255 255 / 0.4)`,
+          'box-shadow': useMotionTemplate`${shadowX}px ${shadowY}px 8px -3px rgb(var(--shadow-color) / 0.4)`,
         } as CSSProperties
       }
-      className="relative aspect-[1] w-[80vw] _rounded-xl rounded-full p-[1px] border border-transparent
+      className="relative aspect-[1000/987] w-[63vw] top-[4px] left-[2px] _rounded-xl rounded-full p-[1px] border border-transparent
       [background:content-box_var(--bg-content),padding-box_var(--bg-padding),border-box_var(--bg-border)]"
     >
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[inherit] transition duration-300"
+        className="opacity-20 pointer-events-none absolute -inset-px rounded-[inherit] transition duration-300"
         style={{
           background: useMotionTemplate`
             radial-gradient(
               650px circle at ${mouseX}px ${mouseY}px,
-              rgba(14, 165, 233, 0.15),
+              var(--light-color),
               transparent 80%
             )
           `,

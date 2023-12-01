@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import HomeLink from '../src/components/HomeLink'
 import Head from 'next/head'
 import Image from 'next/image'
+import Box from '../src/components/Box'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -16,7 +17,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.png" />
       </Head>
       {(router.pathname !== '/') && <HomeLink />}
-      <div className='background' />
+
+      <div className='fixed -z-[1] opacity-[.15] h-full w-full flex justify-center items-center pointer-events-none' >
+        <Box />
+      </div>
 
       <Component {...pageProps} />
 
