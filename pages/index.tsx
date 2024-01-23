@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
+import Link from 'next/link'
+import styles from 'styles/Home.module.css'
 
 
 const Home: NextPage = () => {
@@ -48,7 +49,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to my <a href="https://qwerty.xyz">craft!</a>
+          Welcome to my <a>craft!</a>
         </h1>
 
         <p className={styles.description}>
@@ -58,19 +59,28 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a href="whoami" className='card'>
-            <h2>whoami &rarr;</h2>
-            <p>Find in-depth information about me.</p>
-          </a>
 
-          <a
-            href="metamorphosis"
-            className='card'
-          >
-            <h2>Ash drop II &rarr;</h2>
-            <p>Blockchain infographics about Ash Chapter Two</p>
-            <p>METAMORPHOSIS</p>
-          </a>
+          <Link href="/whoami">
+            <div className='card cursor-pointer'>
+              <h2>whoami &rarr;</h2>
+              <p>Find in-depth information about me.</p>
+            </div>
+          </Link>
+
+          <Link href="metamorphosis" >
+            <div className='card cursor-pointer'>
+              <h2>Ash drop II &rarr;</h2>
+              <p>Blockchain infographics about Ash Chapter Two</p>
+              <p>METAMORPHOSIS</p>
+            </div>
+          </Link>
+
+          <Link href="/experiments" >
+            <div className='card cursor-pointer'>
+              <h2>Playground &rarr;</h2>
+              <p>Experiments ☜(ﾟヮﾟ☜)</p>
+            </div>
+          </Link>
 
         </div>
       </main>

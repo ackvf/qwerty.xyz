@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
+import styles from 'styles/Home.module.css'
 
 const year = (new Date()).getFullYear()
 
@@ -126,7 +126,7 @@ const WhoAmI: NextPage = () => {
 
           <a className='card'>
             <h2>Web ⤵</h2>
-            <p>Next.js, React.js, Svelte<br />web3.js, ethers.js</p>
+            <p>Next.js, React.js, Svelte<br />web3.js, ethers.js, wagmi</p>
           </a>
 
           <a className='card'>
@@ -143,15 +143,21 @@ const WhoAmI: NextPage = () => {
           </a>
 
           <a className='card'>
+            <h2>React.js ⤵</h2>
+            <p>Since 2015</p>
+            <p>({year - 2015} years)</p>
+          </a>
+
+          <a className='card'>
             <h2>TypeScript ⤵</h2>
             <p>Since 2018</p>
             <p>({year - 2018} years)</p>
           </a>
 
           <a className='card'>
-            <h2>React.js ⤵</h2>
-            <p>Since 2015</p>
-            <p>({year - 2015} years)</p>
+            <h2>Web3 ⤵</h2>
+            <p>Since 2021</p>
+            <p>({year - 2021} years)</p>
           </a>
         </div>
 

@@ -3,8 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
-    "deploy:xyz": "git push origin HEAD:qwerty.xyz",
-    "deploy:art": "git push origin HEAD:qwerty.art",
+    "deploy:xyz": "git push origin HEAD:main",
     "deploy": "vercel",
     "dev": "next dev",
     "build": "next build",
