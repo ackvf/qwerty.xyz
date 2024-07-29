@@ -1,7 +1,12 @@
 {
-  "name": "www-qwerty",
+  "name": "xyz.qwerty.www",
   "version": "1.2.0",
   "private": true,
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
+  },
+  "packageManager": "npm@10.0.0",
   "scripts": {
     "deploy:xyz": "git push origin HEAD:main",
     "deploy": "vercel",

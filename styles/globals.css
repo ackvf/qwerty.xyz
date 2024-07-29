@@ -142,3 +142,9 @@ code {
     flex-direction: column;
   }
 }
+
+abbr[title] {
+  cursor: help;
+  /* border-bottom: 2px dotted; */
+  text-decoration: underline dotted;
+}

@@ -144,7 +144,7 @@ const WhoAmI: NextPage = () => {
 
           <a className='card'>
             <h2>React.js ⤵</h2>
-            <p>Since 2015</p>
+            <p>Since <abbr title="Early adopter, React was in beta back then, v0.12b">2015</abbr></p>
             <p>({year - 2015} years)</p>
           </a>
 
