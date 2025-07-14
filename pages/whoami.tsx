@@ -104,10 +104,12 @@ const WhoAmI: NextPage = () => {
         </h1>
 
         <p className={styles.description}>
-          I am a FullStack web/blockchain <span className='swapper' ref={swapper}><span className='hidden'><code>developer</code>.</span><span><code>developer</code>.</span></span>
+          I am a FullStack web3/blockchain <span className='swapper' ref={swapper}><span className='hidden'><code>developer</code>.</span><span><code>developer</code>.</span></span>
           <br />
-          Btw, you can call me <i>Qwerty</i>.
           <br />
+          Btw,
+          <br />
+					you can call me <i>Qwerty</i>.
           <br />
           <span ref={cool} />
         </p>

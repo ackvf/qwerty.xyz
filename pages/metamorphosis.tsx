@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Bar from '../src/components/Bar'
 import Loading from '../src/components/Loading'
-import useComponentToggle from '../src/hooks/useComponentToggle'
+import useActiveToggle from '../src/hooks/useActiveToggle'
 import useMetamorphosisContract from '../src/hooks/useMetamorphosisContract'
 import styles from '../styles/Home.module.css'
 
@@ -12,7 +12,7 @@ const Metamorphosis: NextPage = () => {
 
   type Names = keyof typeof state.metadata
 
-  const { containerRef, visibleName, isComponentVisible, setIsComponentVisible } = useComponentToggle<Names>()
+  const { containerRef, current, isToggled, setIsToggled } = useActiveToggle<Names>()
 
   return (
     <div className='container'>
@@ -95,17 +95,17 @@ const Metamorphosis: NextPage = () => {
         }
       `}</style>
 
-      {isComponentVisible &&
+      {isToggled && current &&
         <div className='bigVideoWrap'>
           <div ref={containerRef} className='card bigVideo'>
             <p className={styles.description}>
               Click video to start playback.
             </p>
             <Loading />
-            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[visibleName]?.[1].animation_url} />
-            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[visibleName]?.[2] as any).animation_url} />
-            <a className='blue' target='_blank' rel='noreferrer' href={state?.metadata[visibleName]?.[1].animation_url} >{state?.metadata[visibleName]?.[1].animation_url}</a>
-            <a className='blue' target='_blank' rel='noreferrer' href={(state?.metadata[visibleName]?.[2] as any).animation_url} >{(state?.metadata[visibleName]?.[2] as any).animation_url}</a>
+            <video loop onClick={toggleVideo} width='50%' src={state?.metadata[current]?.[1].animation_url} />
+            <video loop onClick={toggleVideo} width='50%' src={(state?.metadata[current]?.[2] as any).animation_url} />
+            <a className='blue' target='_blank' rel='noreferrer' href={state?.metadata[current]?.[1].animation_url} >{state?.metadata[current]?.[1].animation_url}</a>
+            <a className='blue' target='_blank' rel='noreferrer' href={(state?.metadata[current]?.[2] as any).animation_url} >{(state?.metadata[current]?.[2] as any).animation_url}</a>
           </div>
         </div>
       }
@@ -129,7 +129,7 @@ const Metamorphosis: NextPage = () => {
 
               return (
                 <div key={name} className='card'>
-                  <span className='cardTitle' onClick={() => setIsComponentVisible({ visibleName: name as Names, toggled: true })}>{name}</span>
+                  <span className='cardTitle' onClick={() => setIsToggled({ current: name as Names, toggled: true })}>{name}</span>
                   <div>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m1.image}><img height={150} src={m1.image.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m1.description} /></a>
                     <a className='zoom' target='_blank' rel='noreferrer' href={m2.image}><img height={150} src={m2.image?.replace('https://arweave.net/', '/nft/') + '.jpg'} alt={m2.description} /></a>

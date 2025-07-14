@@ -65,22 +65,37 @@ const Home: NextPage = () => {
               <h2>whoami &rarr;</h2>
               <p>Find in-depth information about me.</p>
             </div>
-          </Link>
+					</Link>
 
-          <Link href="metamorphosis" >
-            <div className='card cursor-pointer'>
-              <h2>Ash drop II &rarr;</h2>
-              <p>Blockchain infographics about Ash Chapter Two</p>
-              <p>METAMORPHOSIS</p>
-            </div>
-          </Link>
+					<a href="https://github.com/ackvf" target="_blank" rel="noopener noreferrer">
+						<div className='card cursor-pointer'>
+							<h2>Github 🔗</h2>
+							<p>• React utils</p>
+							<p>• TypeScript toolbelt</p>
+						</div>
+					</a>
 
-          <Link href="/experiments" >
-            <div className='card cursor-pointer'>
-              <h2>Playground &rarr;</h2>
-              <p>Experiments ☜(ﾟヮﾟ☜)</p>
-            </div>
-          </Link>
+					<Link href="/exercises">
+						<div className='card cursor-pointer'>
+							<h2>Job exercises &rarr;</h2>
+							<p>Job interview home exercises.</p>
+						</div>
+					</Link>
+
+					<Link href="/experiments" >
+						<div className='card cursor-pointer'>
+							<h2>Playground &rarr;</h2>
+							<p>Experiments ☜(ﾟヮﾟ☜)</p>
+						</div>
+					</Link>
+
+					<Link href="metamorphosis" >
+						<div className='card cursor-pointer'>
+							<h2>Ash drop II &rarr;</h2>
+							<p>Blockchain infographics about Ash Chapter Two -</p>
+							<p>METAMORPHOSIS by Pak</p>
+						</div>
+					</Link>
 
         </div>
       </main>
