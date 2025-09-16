@@ -49,6 +49,14 @@ const projects: Project[] = [
 		name: 'Exodus',
 		description: 'Connect your bank account with plaid and purchase BTC.',
 	},
+	{
+		website_url: 'https://momence.qwerty.art/',
+		repo_url: 'https://github.com/ackvf/momence-homework',
+		repo_friendly_name: '/momence-homework',
+		image_url: '/exercises/momence.jpg',
+		name: 'Momence',
+		description: 'Fetch currency exchange rates from Czech National Bank (ČNB) and convert.',
+	},
 ]
 
 const Homeworks: NextPage = () => {
@@ -204,7 +212,7 @@ const Homeworks: NextPage = () => {
 					This is a gallery of solutions to several home assignments. Each resides in its own repo/branch and has its own deployment.
 					<br />
 					<br />
-					<b>Click each card's title for larger preview or link to get to the page / repository.</b>
+					<b>Click each card's title for larger preview or links to get to their page and repository.</b>
 				</p>
 
 			</main>
