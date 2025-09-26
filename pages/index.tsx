@@ -67,8 +67,8 @@ const Home: NextPage = () => {
             </div>
 					</Link>
 
-					<a href="https://github.com/ackvf" target="_blank" rel="noopener noreferrer">
-						<div className='card cursor-pointer'>
+					<a href="https://github.com/ackvf" className='card cursor-pointer' target="_blank" rel="noopener noreferrer">
+						<div>
 							<h2>Github 🔗</h2>
 							<p>• React utils</p>
 							<p>• TypeScript toolbelt</p>
