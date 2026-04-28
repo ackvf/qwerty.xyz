@@ -71,7 +71,8 @@ const Home: NextPage = () => {
 						<div>
 							<h2>Github 🔗</h2>
 							<p>• React utils</p>
-							<p>• TypeScript toolbelt</p>
+              <p>• TypeScript toolbelt</p>
+              <p>• BigN Library</p>
 						</div>
 					</a>
 
@@ -88,6 +89,13 @@ const Home: NextPage = () => {
 							<p>Experiments ☜(ﾟヮﾟ☜)</p>
 						</div>
 					</Link>
+
+          <a href="https://ts-mock-generator.qwerty.art/" className="card cursor-pointer" target="_blank" rel="noopener noreferrer">
+            <div>
+              <h2>TS Mock Generator 🔗</h2>
+              <p className='font-semibold'>Generate mocks from TypeScript types and vice-versa.</p>
+            </div>
+          </a>
 
 					<Link href="metamorphosis" >
 						<div className='card cursor-pointer'>
