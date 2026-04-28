@@ -90,6 +90,15 @@ const Home: NextPage = () => {
 						</div>
 					</Link>
 
+          <a href="https://inthevoid.dev" className="card cursor-pointer" target="_blank" rel="noopener noreferrer">
+            <div>
+              <h2>In The Void.dev 🔗</h2>
+              <p className='font-semibold'>Human-AI Autonomy Scale</p>
+              <p>Interactive scale project</p>
+              <p>aiautonomyscale.dev</p>
+            </div>
+          </a>
+
           <a href="https://ts-mock-generator.qwerty.art/" className="card cursor-pointer" target="_blank" rel="noopener noreferrer">
             <div>
               <h2>TS Mock Generator 🔗</h2>
